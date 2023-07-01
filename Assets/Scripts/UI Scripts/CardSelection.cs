@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class CardSelection : MonoBehaviour
 {
-    public Image[] raceImages;   // Irkların görüntülerini tutacak dizi
+    public ScriptableObject race;   // Irkların görüntülerini tutacak dizi
     public Image[] classImages;  // Sınıfların görüntülerini tutacak dizi
+    public Image raceImg;
     public Button raceBackButton;    // Irk geri butonu
     public Button raceNextButton;    // Irk ileri butonu
     public Button classBackButton;   // Sınıf geri butonu
@@ -25,7 +26,7 @@ public class CardSelection : MonoBehaviour
         selectedClassIndex = 0;
 
         // İlk ırk ve sınıfın görüntülerini ayarlayalım
-        UpdateRaceImage();
+        //UpdateRaceImage();
         UpdateClassImage();
 
         // Irk geri ve ileri butonlarının tıklama olaylarını tanımlayalım
@@ -40,25 +41,20 @@ public class CardSelection : MonoBehaviour
     // Bir önceki ırka geçmek için kullanılan metot
     public void SelectPreviousRace()
     {
-        if (selectedRaceIndex > 0)
-        {
-            selectedRaceIndex--;
-            selectedClassIndex = 0;  // Bir önceki ırka geçtiğimizde sınıfı sıfırlayalım
-            UpdateRaceImage();
-            UpdateClassImage();
-        }
+         selectedRaceIndex--;
+         selectedClassIndex = 0;  // Bir önceki ırka geçtiğimizde sınıfı sıfırlayalım
+         UpdateRaceImage(selectedRaceIndex);
+         UpdateClassImage();
+        
     }
 
     // Bir sonraki ırka geçmek için kullanılan metot
     public void SelectNextRace()
     {
-        if (selectedRaceIndex < raceImages.Length - 1)
-        {
-            selectedRaceIndex++;
-            selectedClassIndex = 0;  // Bir sonraki ırka geçtiğimizde sınıfı sıfırlayalım
-            UpdateRaceImage();
-            UpdateClassImage();
-        }
+         selectedRaceIndex++;
+         selectedClassIndex = 0;  // Bir sonraki ırka geçtiğimizde sınıfı sıfırlayalım
+         UpdateRaceImage(selectedRaceIndex);
+         UpdateClassImage();
     }
 
     // Bir önceki sınıfa geçmek için kullanılan metot
@@ -82,14 +78,11 @@ public class CardSelection : MonoBehaviour
     }
 
     // Seçilen ırkın görüntüsünü güncelleyen yardımcı metot
-    private void UpdateRaceImage()
+    private void UpdateRaceImage(int raceIndex)
     {
-        for (int i = 0; i < raceImages.Length; i++)
-        {
-            raceImages[i].gameObject.SetActive(i == selectedRaceIndex);
-            if(i == selectedRaceIndex)
-                raceText.text = raceImages[i].name;
-        }
+        //raceImg.sprite = race.;
+        
+        
     }
 
     // Seçilen sınıfın görüntüsünü güncelleyen yardımcı metot
