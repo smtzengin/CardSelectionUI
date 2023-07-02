@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class CardSelection : MonoBehaviour
 {
-    public ScriptableObject race;   // Irkların görüntülerini tutacak dizi
+    public RacesSO[] races;  // Irkların tutulduğu ScriptableObject dizisi
+    public Sprite[] classSprites;  // Sınıfların tutulduğu ScriptableObject dizisi
     public Image[] classImages;  // Sınıfların görüntülerini tutacak dizi
     public Image raceImg;
     public Button raceBackButton;    // Irk geri butonu
@@ -14,7 +13,6 @@ public class CardSelection : MonoBehaviour
     public Button classNextButton;   // Sınıf ileri butonu
     public Text raceText;
     public Text classText;
-
 
     private int selectedRaceIndex;  // Seçilen ırkın dizideki indeksi
     private int selectedClassIndex; // Seçilen sınıfın dizideki indeksi
@@ -26,8 +24,8 @@ public class CardSelection : MonoBehaviour
         selectedClassIndex = 0;
 
         // İlk ırk ve sınıfın görüntülerini ayarlayalım
-        //UpdateRaceImage();
-        UpdateClassImage();
+        UpdateRace(selectedRaceIndex);
+        UpdateClass();
 
         // Irk geri ve ileri butonlarının tıklama olaylarını tanımlayalım
         raceBackButton.onClick.AddListener(SelectPreviousRace);
@@ -41,20 +39,25 @@ public class CardSelection : MonoBehaviour
     // Bir önceki ırka geçmek için kullanılan metot
     public void SelectPreviousRace()
     {
-         selectedRaceIndex--;
-         selectedClassIndex = 0;  // Bir önceki ırka geçtiğimizde sınıfı sıfırlayalım
-         UpdateRaceImage(selectedRaceIndex);
-         UpdateClassImage();
-        
+        selectedRaceIndex--;
+        if (selectedRaceIndex < 0)
+            selectedRaceIndex = races.Length - 1;
+
+        selectedClassIndex = 0;  // Bir önceki ırka geçtiğimizde sınıfı sıfırlayalım
+        UpdateRace(selectedRaceIndex);
+        UpdateClass();
     }
 
     // Bir sonraki ırka geçmek için kullanılan metot
     public void SelectNextRace()
     {
-         selectedRaceIndex++;
-         selectedClassIndex = 0;  // Bir sonraki ırka geçtiğimizde sınıfı sıfırlayalım
-         UpdateRaceImage(selectedRaceIndex);
-         UpdateClassImage();
+        selectedRaceIndex++;
+        if (selectedRaceIndex >= races.Length)
+            selectedRaceIndex = 0;
+
+        selectedClassIndex = 0;  // Bir sonraki ırka geçtiğimizde sınıfı sıfırlayalım
+        UpdateRace(selectedRaceIndex);
+        UpdateClass();
     }
 
     // Bir önceki sınıfa geçmek için kullanılan metot
@@ -63,7 +66,7 @@ public class CardSelection : MonoBehaviour
         if (selectedClassIndex > 0)
         {
             selectedClassIndex--;
-            UpdateClassImage();
+            UpdateClass();
         }
     }
 
@@ -73,27 +76,50 @@ public class CardSelection : MonoBehaviour
         if (selectedClassIndex < classImages.Length - 1)
         {
             selectedClassIndex++;
-            UpdateClassImage();
+            UpdateClass();
         }
     }
 
     // Seçilen ırkın görüntüsünü güncelleyen yardımcı metot
-    private void UpdateRaceImage(int raceIndex)
+    private void UpdateRace(int raceIndex)
     {
-        //raceImg.sprite = race.;
-        
-        
+        if (raceIndex >= 0 && raceIndex < races.Length)
+        {
+            RacesSO selectedRace = races[raceIndex];
+            if (selectedRace != null)
+            {
+                raceText.text = selectedRace.raceName;
+            }
+        }
+        print(GetRaceImage());
+        print(GetRaceName());
     }
 
     // Seçilen sınıfın görüntüsünü güncelleyen yardımcı metot
-    private void UpdateClassImage()
+    private void UpdateClass()
     {
         for (int i = 0; i < classImages.Length; i++)
         {
             bool shouldShow = (i / 2) == selectedRaceIndex;  // Sadece seçilen ırka ait sınıfları gösterelim
             classImages[i].gameObject.SetActive(shouldShow && (i % 2 == selectedClassIndex));
+
+            if (shouldShow && (i % 2 == selectedClassIndex))
+            {
+                int classIndex = i / 2;
+                classImages[i].sprite = classSprites[classIndex];
+                classText.text = "Class " + (classIndex + 1);
+            }
         }
     }
 
-   
+    public string GetRaceName()
+    {
+        return races[selectedRaceIndex].raceName;
+    }
+
+    public Sprite GetRaceImage()
+    {
+        return races[selectedRaceIndex].raceImg;
+    }
+
 }
