@@ -494,7 +494,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Class1
+  m_text: a
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1026,15 +1026,27 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Class1
+    - m_Text: a
       m_Image: {fileID: 0}
-    - m_Text: Class2
+    - m_Text: b
       m_Image: {fileID: 0}
-    - m_Text: Class3
+    - m_Text: c
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2123610234}
+        m_TargetAssemblyTypeName: CardCreation, Assembly-CSharp
+        m_MethodName: ClassDropDrown
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &361313447
 MonoBehaviour:
@@ -1948,10 +1960,30 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a3e62506f704b4d7b9e70203e0ae3cf4, type: 3}
   - {fileID: 21300000, guid: a1ba237cef1482e4bbc468b976b720b4, type: 3}
   - {fileID: 21300000, guid: aeccbc65a436a467793df45e9c10697b, type: 3}
-  class1_1:
+  class0_1:
   - UndeadClass1
   - UndeadClass2
   - UndeadClass3
+  class1_1:
+  - GolemClass1
+  - GolemClass2
+  - GolemClass3
+  class2_1:
+  - CosmicClass1
+  - CosmicClass2
+  - CosmicClass2
+  class3_1:
+  - ElvenClass1
+  - ElvenClass2
+  - ElvenClass3
+  class4_1:
+  - BeastClass1
+  - BeastClass2
+  - BeastClass3
+  class5_1:
+  - "B\xF6cekClass1"
+  - "B\xF6cekClass2"
+  - "B\xF6cekClass3"
 --- !u!1 &730487342
 GameObject:
   m_ObjectHideFlags: 0
@@ -3856,7 +3888,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 536.6235, y: 9.447571}
+  m_AnchoredPosition: {x: 536.62354, y: 9.44751}
   m_SizeDelta: {x: -1307.5477, y: -185.173}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1843447262
@@ -4353,6 +4385,8 @@ MonoBehaviour:
   classTextCW: {fileID: 610940287}
   healthTextCW: {fileID: 856932740}
   damageTextCW: {fileID: 1748934305}
+  label: {fileID: 219339145}
   raceImg: {fileID: 1703988388}
-  classIndex: 0
-  raceIndexDD: {fileID: 105295967}
+  classNames: []
+  raceIndex_DD: {fileID: 105295967}
+  classIndex_DD: {fileID: 361313446}

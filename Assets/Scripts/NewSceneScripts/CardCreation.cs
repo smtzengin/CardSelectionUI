@@ -12,18 +12,23 @@ public class CardCreation : MonoBehaviour
     [SerializeField] private TextMeshProUGUI classTextCW;
     [SerializeField] private TextMeshProUGUI healthTextCW;
     [SerializeField] private TextMeshProUGUI damageTextCW;
+    [SerializeField] private TextMeshProUGUI label;
     [SerializeField] private Image raceImg;
-    [SerializeField] int classIndex;
-    [SerializeField] TMP_Dropdown raceIndexDD;
+    [SerializeField] private string[] classNames = null;
+
+
+    [SerializeField] TMP_Dropdown raceIndex_DD;
+    [SerializeField] TMP_Dropdown classIndex_DD;
 
     private void Awake()
     {
         RaceDropDown(0);
+        ClassDropDrown(0);
     }
 
     public void RaceDropDown(int raceIndex)
     {
-        raceIndex = raceIndexDD.value;
+        raceIndex = raceIndex_DD.value;
         raceTextCW.text = raceIndex switch
         {
             0 => GameController.instance.races[0].ToString(),
@@ -43,7 +48,58 @@ public class CardCreation : MonoBehaviour
             4 => GameController.instance.racesImg[4],
             5 => GameController.instance.racesImg[5],
         };
+
+        
+
+        switch (raceIndex)
+        {
+            case 0:
+                classNames = GameController.instance.class0_1;
+                break;
+            case 1:
+                classNames = GameController.instance.class1_1;
+                break;
+            case 2:
+                classNames = GameController.instance.class2_1;
+                break;
+            case 3:
+                classNames = GameController.instance.class3_1;
+                break;
+            case 4:
+                classNames = GameController.instance.class4_1;
+                break;
+            case 5:
+                classNames = GameController.instance.class5_1;
+                break;
+            default:
+                break;
+        }
+
+        if (classNames != null)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                classIndex_DD.options[i].text = classNames[i].ToString();                
+            }
+        }
+        classIndex_DD.value = 0;
+        label.text = classIndex_DD.options[0].text;
+        classTextCW.text = classIndex_DD.options[0].text;
+
+    } 
+       
+    public void ClassDropDrown(int classIndex)
+    {
+        classIndex = classIndex_DD.value;
+        classTextCW.text = classIndex switch
+        {
+            0 => classNames[0].ToString(),
+            1 => classNames[1].ToString(),
+            2 => classNames[2].ToString(),
+            _ => "Default",
+        };
     }
 
     
+
 }
