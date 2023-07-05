@@ -16,7 +16,7 @@ public class CardCreation : MonoBehaviour
     [SerializeField] private Image raceImg;
     [SerializeField] private string[] classNames = null;
 
-
+    //DropDown objesinin içerisinde bulunan Dropdown TextMeshPro'ya eriþmemizi saðlýyor. direkt dropdown'ýn tamamýný kapsamýyor!
     [SerializeField] TMP_Dropdown raceIndex_DD;
     [SerializeField] TMP_Dropdown classIndex_DD;
 
@@ -28,6 +28,7 @@ public class CardCreation : MonoBehaviour
 
     public void RaceDropDown(int raceIndex)
     {
+        //Irk seçiminin yapýldýðý yer.
         raceIndex = raceIndex_DD.value;
         raceTextCW.text = raceIndex switch
         {
@@ -39,6 +40,7 @@ public class CardCreation : MonoBehaviour
             5 => GameController.instance.races[5].ToString(),
             _ => "Default",
         };
+        //Irk seçimine göre sprite güncelleniyor.
         raceImg.sprite = raceIndex switch
         {
             0 => GameController.instance.racesImg[0],
@@ -50,7 +52,8 @@ public class CardCreation : MonoBehaviour
         };
 
         
-
+        //Irklarýn indexlerine göre GameController sýnýfýnda oluþturulan özel sýnýf dizilerine eriþmemizi saðlýyor
+        //ilk olarak GameController'daki diziyi classNames dizisine aktarýyor ve for döngüsü içerisinde DropDown'da güncelleme yapýyor.
         switch (raceIndex)
         {
             case 0:
@@ -82,6 +85,7 @@ public class CardCreation : MonoBehaviour
                 classIndex_DD.options[i].text = classNames[i].ToString();                
             }
         }
+        //alttaki 3 satýr kod ýrk deðiþtiðinde cardView üzerindeki label ve text'in deðiþmesini saðlýyor.
         classIndex_DD.value = 0;
         label.text = classIndex_DD.options[0].text;
         classTextCW.text = classIndex_DD.options[0].text;
@@ -90,6 +94,7 @@ public class CardCreation : MonoBehaviour
        
     public void ClassDropDrown(int classIndex)
     {
+        //Sýnýf seçiminin yapýldýðý yer.
         classIndex = classIndex_DD.value;
         classTextCW.text = classIndex switch
         {

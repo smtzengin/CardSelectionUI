@@ -494,7 +494,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: a
+  m_text: Class1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1026,12 +1026,12 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: a
-      m_Image: {fileID: 0}
-    - m_Text: b
-      m_Image: {fileID: 0}
-    - m_Text: c
-      m_Image: {fileID: 0}
+    - m_Text: Class1
+      m_Image: {fileID: 21300000, guid: 3f8cf2e9667bd1b4da4767aa860fd690, type: 3}
+    - m_Text: Class2
+      m_Image: {fileID: 21300000, guid: 4637742fec4477841a5440157203970f, type: 3}
+    - m_Text: Class3
+      m_Image: {fileID: 21300000, guid: 062f758b097f94d4697256d1993d58cd, type: 3}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -1555,7 +1555,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0.000061035156, y: 29}
+  m_AnchoredPosition: {x: 0.000061035156, y: 72}
   m_SizeDelta: {x: 320, y: 100}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &586191644
