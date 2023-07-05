@@ -13,12 +13,15 @@ public class CardCreation : MonoBehaviour
     [SerializeField] private TextMeshProUGUI healthTextCW;
     [SerializeField] private TextMeshProUGUI damageTextCW;
     [SerializeField] private TextMeshProUGUI label;
+    [SerializeField] private TextMeshProUGUI labelAbility;
     [SerializeField] private Image raceImg;
-    [SerializeField] private string[] classNames = null;
+    [SerializeField] private string[,] classNames = null;
+    [SerializeField] private string[,] abilityNames = null;
 
     //DropDown objesinin içerisinde bulunan Dropdown TextMeshPro'ya eriþmemizi saðlýyor. direkt dropdown'ýn tamamýný kapsamýyor!
     [SerializeField] TMP_Dropdown raceIndex_DD;
     [SerializeField] TMP_Dropdown classIndex_DD;
+    [SerializeField] TMP_Dropdown abilityIndex_DD;
 
     private void Awake()
     {
@@ -82,7 +85,7 @@ public class CardCreation : MonoBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
-                classIndex_DD.options[i].text = classNames[i].ToString();                
+                classIndex_DD.options[i].text = classNames[0,i].ToString();                
             }
         }
         //alttaki 3 satýr kod ýrk deðiþtiðinde cardView üzerindeki label ve text'in deðiþmesini saðlýyor.
@@ -98,13 +101,29 @@ public class CardCreation : MonoBehaviour
         classIndex = classIndex_DD.value;
         classTextCW.text = classIndex switch
         {
-            0 => classNames[0].ToString(),
-            1 => classNames[1].ToString(),
-            2 => classNames[2].ToString(),
+            0 => classNames[0,0].ToString(),
+            1 => classNames[0,1].ToString(),
+            2 => classNames[0,2].ToString(),
             _ => "Default",
         };
+        
+
+
+        if (classNames != null)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                abilityIndex_DD.options[i].text = classNames[i + 1, 0].ToString();
+            }
+        }
+        //abilityIndex_DD.value = 0;
+        labelAbility.text = abilityIndex_DD.options[0].text;
     }
 
+    public void AbilityDropDown(int abilityIndex)
+    {
+
+    }
     
 
 }
