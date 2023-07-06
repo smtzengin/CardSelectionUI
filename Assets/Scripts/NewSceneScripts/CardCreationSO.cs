@@ -8,7 +8,6 @@ public class CardCreationSO : ScriptableObject
     public string raceName;
     public Sprite raceImg;
     public string className;
-    public int health;
-    public int damage;
+    public string abilityName;
 
 }

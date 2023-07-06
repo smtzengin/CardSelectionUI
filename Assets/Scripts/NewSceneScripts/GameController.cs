@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour
     [SerializeField] public string[,] class3_1 = { { "ElvenClass1", "ElvenClass2", "ElvenClass3" },
                                                     {"Class1Yetenek1","Class2yetenek1","class3yetenek1"},
                                                     {"Class1Yetenek2","Class2yetenek2","class3yetenek2"},
-                                                    {"Class1Yetenek3","Class2yetenek3","class3yetenek3"},
+                                                    {"Class1Yetenek3","Class2yetenek3","class3yetenek3"},   
                                                   };
     [SerializeField] public string[,] class4_1 = { { "BeastClass1", "BeastClass2", "BeastClass3" },
                                                     {"Class1Yetenek1","Class2yetenek1","class3yetenek1"},

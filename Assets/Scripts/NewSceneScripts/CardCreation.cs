@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using System.Linq;
+using UnityEditor;
 
 public class CardCreation : MonoBehaviour
 {
-
     [SerializeField] private TextMeshProUGUI raceTextCW;
     [SerializeField] private TextMeshProUGUI classTextCW;
+    [SerializeField] private TextMeshProUGUI abilityTextCW;
     [SerializeField] private TextMeshProUGUI healthTextCW;
     [SerializeField] private TextMeshProUGUI damageTextCW;
     [SerializeField] private TextMeshProUGUI label;
     [SerializeField] private TextMeshProUGUI labelAbility;
     [SerializeField] private Image raceImg;
     [SerializeField] private string[,] classNames = null;
-    [SerializeField] private string[,] abilityNames = null;
+    private List<string> abilityOptions = new List<string>();
+    [SerializeField] private GameObject cardPrefab;
+    [SerializeField] private string savePath = "Assets/Cards/";
+
 
     //DropDown objesinin içerisinde bulunan Dropdown TextMeshPro'ya eriþmemizi saðlýyor. direkt dropdown'ýn tamamýný kapsamýyor!
     [SerializeField] TMP_Dropdown raceIndex_DD;
@@ -27,6 +31,7 @@ public class CardCreation : MonoBehaviour
     {
         RaceDropDown(0);
         ClassDropDrown(0);
+        AbilityDropDown(0);
     }
 
     public void RaceDropDown(int raceIndex)
@@ -52,6 +57,7 @@ public class CardCreation : MonoBehaviour
             3 => GameController.instance.racesImg[3],
             4 => GameController.instance.racesImg[4],
             5 => GameController.instance.racesImg[5],
+            _ => GameController.instance.racesImg[0],
         };
 
         
@@ -108,24 +114,72 @@ public class CardCreation : MonoBehaviour
         };
 
 
-        if (classNames != null)
+        if (classNames != null && classIndex >= 0 && classIndex < classNames.GetLength(1))
         {
-            List<string> abilityOptions = new List<string>();
-            for (int i = 1; i < 4; i++)
+            classTextCW.text = classNames[0, classIndex].ToString();
+
+            abilityOptions.Clear();
+            for (int i = 1; i < classNames.GetLength(0); i++)
             {
                 abilityOptions.Add(classNames[i, classIndex]);
             }
+
             abilityIndex_DD.ClearOptions();
             abilityIndex_DD.AddOptions(abilityOptions);
+
+            labelAbility.text = abilityIndex_DD.options[0].text;
         }
 
-        labelAbility.text = abilityIndex_DD.options[0].text;
+
     }
 
     public void AbilityDropDown(int abilityIndex)
     {
-
+        
+        abilityIndex = abilityIndex_DD.value;
+        abilityTextCW.text = abilityIndex switch
+        {
+            0 => abilityOptions[0],
+            1 => abilityOptions[1],
+            2 => abilityOptions[2],
+            _ => "Default",
+        };
     }
-    
+
+
+    public void CreateCardAndSavePrefab()
+    {
+        // Kartý oluþtur
+        CardCreationSO card = ScriptableObject.CreateInstance<CardCreationSO>();
+
+        // Kart özelliklerini ayarla
+        card.raceName = raceTextCW.text;
+        card.raceImg = raceImg.sprite;
+        card.className = classTextCW.text;
+        card.abilityName = abilityTextCW.text;
+
+        // Scriptable object'i proje dosyasýna kaydet
+        string fileName = card.raceName + "_" + card.className + ".asset";
+        string assetPath = savePath + fileName;
+        AssetDatabase.CreateAsset(card, assetPath);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+
+        Debug.Log("CardCreationSO oluþturuldu ve kaydedildi: " + assetPath);
+
+        cardPrefab.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = card.raceName;
+        cardPrefab.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = card.className;
+        cardPrefab.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = card.abilityName;
+        cardPrefab.transform.GetChild(5).GetComponent<Image>().sprite = card.raceImg;
+
+        // Kartý prefab olarak kaydet
+        GameObject prefabCopy = Instantiate(cardPrefab);
+        string prefabPath = savePath + card.raceName + "_" + card.className + ".prefab";
+        GameObject prefab = PrefabUtility.SaveAsPrefabAsset(prefabCopy, prefabPath);
+
+        Debug.Log("Prefab kaydedildi: " + prefabPath);
+    }
+
+
 
 }
