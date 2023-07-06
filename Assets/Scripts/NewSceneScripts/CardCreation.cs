@@ -106,17 +106,19 @@ public class CardCreation : MonoBehaviour
             2 => classNames[0,2].ToString(),
             _ => "Default",
         };
-        
 
 
         if (classNames != null)
         {
-            for (int i = 0; i < 3; i++)
+            List<string> abilityOptions = new List<string>();
+            for (int i = 1; i < 4; i++)
             {
-                abilityIndex_DD.options[i].text = classNames[i + 1, 0].ToString();
+                abilityOptions.Add(classNames[i, classIndex]);
             }
+            abilityIndex_DD.ClearOptions();
+            abilityIndex_DD.AddOptions(abilityOptions);
         }
-        //abilityIndex_DD.value = 0;
+
         labelAbility.text = abilityIndex_DD.options[0].text;
     }
 
