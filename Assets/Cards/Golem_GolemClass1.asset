@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1dea0d65a2a6905439b7243dfc802a41, type: 3}
-  m_Name: Undead_UndeadClass1
+  m_Name: Golem_GolemClass1
   m_EditorClassIdentifier: 
-  raceName: Undead
-  raceImg: {fileID: 21300000, guid: f2533fecd4831784199ffef1a6f439ee, type: 3}
-  className: UndeadClass1
-  abilityName: Class1Yetenek2
+  raceName: Golem
+  raceImg: {fileID: 21300000, guid: a1ba237cef1482e4bbc468b976b720b4, type: 3}
+  className: GolemClass1
+  abilityName: Class1Yetenek1
   ability: 0
