@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1dea0d65a2a6905439b7243dfc802a41, type: 3}
-  m_Name: Cosmic_CosmicClass3
+  m_Name: Undead_UndeadClass1
   m_EditorClassIdentifier: 
-  raceName: Cosmic
-  raceImg: {fileID: 21300000, guid: aeccbc65a436a467793df45e9c10697b, type: 3}
-  className: CosmicClass3
-  abilityName: class3yetenek2
+  raceName: Undead
+  raceImg: {fileID: 21300000, guid: f2533fecd4831784199ffef1a6f439ee, type: 3}
+  className: UndeadClass1
+  abilityName: Class1Yetenek2
+  ability: 1

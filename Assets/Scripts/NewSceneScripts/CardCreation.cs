@@ -22,10 +22,13 @@ public class CardCreation : MonoBehaviour
     [SerializeField] private string savePath = "Assets/Cards/";
 
 
-    //DropDown objesinin içerisinde bulunan Dropdown TextMeshPro'ya eriþmemizi saðlýyor. direkt dropdown'ýn tamamýný kapsamýyor!
+    //DropDown objesinin i?erisinde bulunan Dropdown TextMeshPro'ya eri?memizi sa?l?yor. direkt dropdown'?n tamam?n? kapsam?yor!
     [SerializeField] TMP_Dropdown raceIndex_DD;
     [SerializeField] TMP_Dropdown classIndex_DD;
     [SerializeField] TMP_Dropdown abilityIndex_DD;
+
+    //Ability fonksiyonunu degistirmek icin enum kullaniyoruz
+    private AbilityEnums ability;
 
     private void Awake()
     {
@@ -36,7 +39,7 @@ public class CardCreation : MonoBehaviour
 
     public void RaceDropDown(int raceIndex)
     {
-        //Irk seçiminin yapýldýðý yer.
+        //Irk se?iminin yap?ld??? yer.
         raceIndex = raceIndex_DD.value;
         raceTextCW.text = raceIndex switch
         {
@@ -48,7 +51,7 @@ public class CardCreation : MonoBehaviour
             5 => GameController.instance.races[5].ToString(),
             _ => "Default",
         };
-        //Irk seçimine göre sprite güncelleniyor.
+        //Irk se?imine g?re sprite g?ncelleniyor.
         raceImg.sprite = raceIndex switch
         {
             0 => GameController.instance.racesImg[0],
@@ -61,8 +64,8 @@ public class CardCreation : MonoBehaviour
         };
 
         
-        //Irklarýn indexlerine göre GameController sýnýfýnda oluþturulan özel sýnýf dizilerine eriþmemizi saðlýyor
-        //ilk olarak GameController'daki diziyi classNames dizisine aktarýyor ve for döngüsü içerisinde DropDown'da güncelleme yapýyor.
+        //Irklar?n indexlerine g?re GameController s?n?f?nda olu?turulan ?zel s?n?f dizilerine eri?memizi sa?l?yor
+        //ilk olarak GameController'daki diziyi classNames dizisine aktar?yor ve for d?ng?s? i?erisinde DropDown'da g?ncelleme yap?yor.
         switch (raceIndex)
         {
             case 0:
@@ -94,7 +97,7 @@ public class CardCreation : MonoBehaviour
                 classIndex_DD.options[i].text = classNames[0,i].ToString();                
             }
         }
-        //alttaki 3 satýr kod ýrk deðiþtiðinde cardView üzerindeki label ve text'in deðiþmesini saðlýyor.
+        //alttaki 3 sat?r kod ?rk de?i?ti?inde cardView ?zerindeki label ve text'in de?i?mesini sa?l?yor.
         classIndex_DD.value = 0;
         label.text = classIndex_DD.options[0].text;
         classTextCW.text = classIndex_DD.options[0].text;
@@ -103,7 +106,7 @@ public class CardCreation : MonoBehaviour
        
     public void ClassDropDrown(int classIndex)
     {
-        //Sýnýf seçiminin yapýldýðý yer.
+        //S?n?f se?iminin yap?ld??? yer.
         classIndex = classIndex_DD.value;
         classTextCW.text = classIndex switch
         {
@@ -146,33 +149,63 @@ public class CardCreation : MonoBehaviour
         };
     }
 
+    public AbilityEnums ConnectAbilityIndexAndEnum(int raceIndex, int classIndex, int abilityIndex)
+    {
+
+        switch (raceIndex, classIndex, abilityIndex)
+        {
+            case (0, 0, 0):
+                ability = AbilityEnums.Damage;
+                break;
+            case (0, 0, 1):
+                ability = AbilityEnums.Heal;
+                break;
+            case (0, 0, 2):
+                ability = AbilityEnums.Damage;
+                break;
+            case (0, 1, 0):
+                ability = AbilityEnums.Heal;
+                break;
+            case (0, 1, 1):
+                ability = AbilityEnums.Damage;
+                break;
+            case (0, 1, 2):
+                ability = AbilityEnums.Heal;
+                break;
+            default:
+                break;
+        }
+        return ability;
+    }
+
 
     public void CreateCardAndSavePrefab()
     {
-        // Kartý oluþtur
+        // Kart? olu?tur
         CardCreationSO card = ScriptableObject.CreateInstance<CardCreationSO>();
 
-        // Kart özelliklerini ayarla
+        // Kart ?zelliklerini ayarla
         card.raceName = raceTextCW.text;
         card.raceImg = raceImg.sprite;
         card.className = classTextCW.text;
         card.abilityName = abilityTextCW.text;
+        card.ability = ConnectAbilityIndexAndEnum(raceIndex_DD.value, classIndex_DD.value, abilityIndex_DD.value);
 
-        // Scriptable object'i proje dosyasýna kaydet
+        // Scriptable object'i proje dosyas?na kaydet
         string fileName = card.raceName + "_" + card.className + ".asset";
         string assetPath = savePath + fileName;
         AssetDatabase.CreateAsset(card, assetPath);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
-        Debug.Log("CardCreationSO oluþturuldu ve kaydedildi: " + assetPath);
+        Debug.Log("CardCreationSO olu?turuldu ve kaydedildi: " + assetPath);
 
         cardPrefab.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = card.raceName;
         cardPrefab.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = card.className;
         cardPrefab.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = card.abilityName;
         cardPrefab.transform.GetChild(5).GetComponent<Image>().sprite = card.raceImg;
 
-        // Kartý prefab olarak kaydet
+        // Kart? prefab olarak kaydet
         GameObject prefabCopy = Instantiate(cardPrefab);
         string prefabPath = savePath + card.raceName + "_" + card.className + ".prefab";
         GameObject prefab = PrefabUtility.SaveAsPrefabAsset(prefabCopy, prefabPath);

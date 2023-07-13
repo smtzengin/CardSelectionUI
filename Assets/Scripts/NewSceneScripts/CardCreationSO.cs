@@ -9,5 +9,6 @@ public class CardCreationSO : ScriptableObject
     public Sprite raceImg;
     public string className;
     public string abilityName;
+    public AbilityEnums ability;
 
 }
