@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -43,6 +44,11 @@ public class GameController : MonoBehaviour
         instance = this;
     }
 
- 
-   
+    private void Start()
+    {
+        if (PlayerPrefs.GetInt("isCreated") == 2)
+            SceneManager.LoadScene(1);
+    }
+
+
 }

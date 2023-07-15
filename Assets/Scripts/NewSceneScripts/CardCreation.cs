@@ -1,10 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public class CardCreation : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class CardCreation : MonoBehaviour
     [SerializeField] private string[,] classNames = null;
     private List<string> abilityOptions = new List<string>();
     [SerializeField] private GameObject cardPrefab;
-    [SerializeField] private string savePath = "Assets/Cards/";
+    [SerializeField] private string savePath = "Assets/Resources/";
 
 
     //DropDown objesinin i?erisinde bulunan Dropdown TextMeshPro'ya eri?memizi sa?l?yor. direkt dropdown'?n tamam?n? kapsam?yor!
@@ -30,11 +31,13 @@ public class CardCreation : MonoBehaviour
     //Ability fonksiyonunu degistirmek icin enum kullaniyoruz
     private AbilityEnums ability;
 
-    private void Awake()
-    {
+    private void Awake(){
+
+        print(PlayerPrefs.GetInt("isCreated"));
         RaceDropDown(0);
         ClassDropDrown(0);
         AbilityDropDown(0);
+
     }
 
     public void RaceDropDown(int raceIndex)
@@ -181,38 +184,46 @@ public class CardCreation : MonoBehaviour
 
     public void CreateCardAndSavePrefab()
     {
-        // Kart? olu?tur
-        CardCreationSO card = ScriptableObject.CreateInstance<CardCreationSO>();
 
-        // Kart ?zelliklerini ayarla
-        card.raceName = raceTextCW.text;
-        card.raceImg = raceImg.sprite;
-        card.className = classTextCW.text;
-        card.abilityName = abilityTextCW.text;
-        card.ability = ConnectAbilityIndexAndEnum(raceIndex_DD.value, classIndex_DD.value, abilityIndex_DD.value);
+        if (PlayerPrefs.GetInt("isCreated") == 0 || PlayerPrefs.GetInt("isCreated") == 1)
+        {
+            // Kart? olu?tur
+            CardCreationSO card = ScriptableObject.CreateInstance<CardCreationSO>();
 
-        // Scriptable object'i proje dosyas?na kaydet
-        string fileName = card.raceName + "_" + card.className + ".asset";
-        string assetPath = savePath + fileName;
-        AssetDatabase.CreateAsset(card, assetPath);
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
+            // Kart ?zelliklerini ayarla
+            card.raceName = raceTextCW.text;
+            card.raceImg = raceImg.sprite;
+            card.className = classTextCW.text;
+            card.abilityName = abilityTextCW.text;
+            card.ability = ConnectAbilityIndexAndEnum(raceIndex_DD.value, classIndex_DD.value, abilityIndex_DD.value);
 
-        Debug.Log("CardCreationSO olu?turuldu ve kaydedildi: " + assetPath);
+            // Scriptable object'i proje dosyas?na kaydet
+            string fileName = "MainCard_" + (PlayerPrefs.GetInt("isCreated") + 1) + ".asset";
+            string assetPath = savePath + fileName;
+            AssetDatabase.CreateAsset(card, assetPath);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
 
-        cardPrefab.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = card.raceName;
-        cardPrefab.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = card.className;
-        cardPrefab.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = card.abilityName;
-        cardPrefab.transform.GetChild(5).GetComponent<Image>().sprite = card.raceImg;
+            Debug.Log("CardCreationSO olu?turuldu ve kaydedildi: " + assetPath);
+            cardPrefab.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = card.raceName;
+            cardPrefab.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = card.className;
+            cardPrefab.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = card.abilityName;
+            cardPrefab.transform.GetChild(5).GetComponent<Image>().sprite = card.raceImg;
 
-        // Kart? prefab olarak kaydet
-        GameObject prefabCopy = Instantiate(cardPrefab);
-        string prefabPath = savePath + card.raceName + "_" + card.className + ".prefab";
-        GameObject prefab = PrefabUtility.SaveAsPrefabAsset(prefabCopy, prefabPath);
+            // Kart? prefab olarak kaydet
+            GameObject prefabCopy = Instantiate(cardPrefab);
+            string prefabPath = savePath + "MainCard_" + (PlayerPrefs.GetInt("isCreated") + 1) + ".prefab";
+            GameObject prefab = PrefabUtility.SaveAsPrefabAsset(prefabCopy, prefabPath);
 
-        Debug.Log("Prefab kaydedildi: " + prefabPath);
+            Debug.Log("Prefab kaydedildi: " + prefabPath);
+            PlayerPrefs.SetInt("isCreated", PlayerPrefs.GetInt("isCreated") + 1);            
+
+        }
+        else
+        {
+            print("daha fazla oluşturamazsınız!");
+        }
+        
     }
-
-
 
 }

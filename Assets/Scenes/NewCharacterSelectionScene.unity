@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,8 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 4dd297a9375f36c40a1c636c024068dd, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 1e3284413de06ab419127210f99bd399, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -5903,7 +5903,7 @@ MonoBehaviour:
   labelAbility: {fileID: 1269370602}
   raceImg: {fileID: 1703988388}
   cardPrefab: {fileID: 1798528656970483254, guid: 4942d584e860fad469bb91b4c64bb7e8, type: 3}
-  savePath: Assets/Cards/
+  savePath: Assets/Resources/
   raceIndex_DD: {fileID: 105295967}
   classIndex_DD: {fileID: 361313446}
   abilityIndex_DD: {fileID: 1831154778}
